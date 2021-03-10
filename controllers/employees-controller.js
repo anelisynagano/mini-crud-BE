@@ -2,7 +2,9 @@ const Employee = require("../models/Employee");
 
 const getAllEmployees = (req, res, next) => {
   Employee.getAll((err, results) => {
-    if (err) res.json(err);
+    if (err) {
+      return res.json(err);
+    }
     req.employees = results;
     next();
   });

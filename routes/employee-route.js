@@ -10,7 +10,8 @@ const {
 } = require("../controllers/employees-controller");
 
 router.get("/", getAllEmployees, (req, res) => {
-  res.send(req.employees);
+  console.log(req.employees);
+  res.json({ data: req.employees });
 });
 
 router.get("/:id", findById, (req, res) => {
