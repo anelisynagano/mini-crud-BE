@@ -12,9 +12,12 @@ const getAllEmployees = (req, res, next) => {
 
 const addNewEmployee = (req, res, next) => {
   Employee.addNew(req.body, req.employees, (err, results) => {
-    if (err) res.json(err);
-    req.id = results;
-    next();
+    if (err) {
+      res.json({ error: "email already in use" });
+    } else {
+      req.id = results;
+      next();
+    }
   });
 };
 
@@ -49,10 +52,38 @@ const deleteEmployee = (req, res, next) => {
   });
 };
 
+const sendAllEmployees = (req, res, next) => {
+  res.status(200).json({ data: req.employees });
+  next();
+};
+
+const sendEmployee = (req, res, next) => {
+  res.status(200).send(req.employee[0]);
+  next();
+};
+
+const deletedResponse = (req, res) => {
+  res.send("employee deleted");
+};
+
+const handleError = (err, req, res, next) => {
+  err.status = err.status || 500;
+  if (err.status == 500) {
+    console.log(err);
+  }
+  if (process.env.NODE_ENV === "production" && err.status === 500) {
+    err.message = "Something went wrong...";
+  }
+  res.status(err.status || 500).json({ message: err.message });
+};
+
 module.exports = {
   getAllEmployees,
   addNewEmployee,
   findById,
   editEmployee,
   deleteEmployee,
+  sendAllEmployees,
+  sendEmployee,
+  deletedResponse,
 };

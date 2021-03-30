@@ -7,27 +7,19 @@ const {
   findById,
   editEmployee,
   deleteEmployee,
+  sendAllEmployees,
+  sendEmployee,
+  deletedResponse,
 } = require("../controllers/employees-controller");
 
-router.get("/", getAllEmployees, (req, res) => {
-  console.log(req.employees);
-  res.json({ data: req.employees });
-});
+router.get("/", getAllEmployees, sendAllEmployees);
 
-router.get("/:id", findById, (req, res) => {
-  res.send(req.employee[0]);
-});
+router.get("/:id", findById, sendEmployee);
 
-router.post("/", addNewEmployee, findById, (req, res) => {
-  res.send({ id: req.employee[0].id, ...req.body });
-});
+router.post("/", addNewEmployee, findById, sendEmployee);
 
-router.put("/:id", editEmployee, findById, (req, res) => {
-  res.send(req.body);
-});
+router.put("/:id", editEmployee, findById, sendEmployee);
 
-router.delete("/:id", deleteEmployee, getAllEmployees, (req, res) => {
-  res.send("employee deleted");
-});
+router.delete("/:id", deleteEmployee, getAllEmployees, deletedResponse);
 
 module.exports = router;
