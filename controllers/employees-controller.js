@@ -11,9 +11,9 @@ const getAllEmployees = (req, res, next) => {
 };
 
 const addNewEmployee = (req, res, next) => {
-  Employee.addNew(req.body, req.employees, (err, results) => {
+  Employee.addNew(req.body, (err, results) => {
     if (err) {
-      res.json({ error: "email already in use" });
+      res.status(501).json({ error: "error adding new employee" });
     } else {
       req.id = results;
       next();

@@ -12,7 +12,9 @@ const {
   deletedResponse,
 } = require("../controllers/employees-controller");
 
-router.get("/", getAllEmployees, sendAllEmployees);
+const { isAuthenticated } = require("../controllers/auth-controller");
+
+router.get("/", isAuthenticated, getAllEmployees, sendAllEmployees);
 
 router.get("/:id", findById, sendEmployee);
 

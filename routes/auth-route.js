@@ -5,12 +5,15 @@ const {
   addNewEmployee,
   sendEmployee,
   findById,
+  getAllEmployees,
 } = require("../controllers/employees-controller");
 
-const { authenticateEmployee } = require("../controllers/auth-controller");
+const { login, isAuthenticated } = require("../controllers/auth-controller");
 
 router.post("/signup", addNewEmployee, findById, sendEmployee);
 
-router.post("/signin", authenticateEmployee);
+router.post("/signin", login, isAuthenticated, (req, res) => {
+  console.log("authenticated!");
+});
 
 module.exports = router;

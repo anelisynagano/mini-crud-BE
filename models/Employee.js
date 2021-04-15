@@ -9,7 +9,7 @@ Employee.getAll = (callback) => {
   });
 };
 
-Employee.addNew = async (req, id, callback) => {
+Employee.addNew = async (req, callback) => {
   const { name, role, password, email } = req;
   const hashedPassword = await bcrypt.hash(password, 10);
   connection.query(
